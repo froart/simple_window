@@ -13,10 +13,8 @@ void update() {
       image[i].b = flag * 255;
       image[i].a = 255;
    } 
-   flag = (0==flag);
-
+   flag = !flag;
 }
-
 
 int main(int argc, char** argv) {
 
