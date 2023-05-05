@@ -6,14 +6,17 @@ const int HEIGHT = 600;
 std::vector<SDL_Color> image = std::vector<SDL_Color>(WIDTH * HEIGHT);
 
 void update() {
+   static u_char flag = 1;
    for(int i = 0; i < WIDTH * HEIGHT; ++i) {
-      image[i].r = rand() % 256;
-      image[i].g = rand() % 256;
-      image[i].b = rand() % 256;
+      image[i].r = flag * 255;
+      image[i].g = flag * 255;
+      image[i].b = flag * 255;
       image[i].a = 255;
    } 
+   flag = (0==flag);
 
 }
+
 
 int main(int argc, char** argv) {
 
