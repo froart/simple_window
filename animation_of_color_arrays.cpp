@@ -30,10 +30,10 @@ simpleWindow::simpleWindow(int width,
    }
 }
 
-simpleWindow::animate(vector<Color>& image, function<void()> update) {
+void simpleWindow::animate(std::vector<SDL_Color>& image, std::function<void()> update) {
 
    if (image.size() != screenWidth_ * screenHeight_) {
-      cout << "Size of the image should be the same as the screen created! " << std::endl;
+      std::cout << "Size of the image should be the same as the screen created! " << std::endl;
       ERROR();
    }
    
@@ -47,19 +47,25 @@ simpleWindow::animate(vector<Color>& image, function<void()> update) {
             quit = true;
          else if (e.type == SDL_KEYDOWN)
             quit = true;
+         else if (e.key.keysym.sym == SDLK_ESCAPE)
+            quit = true;
       }
       
       // Update the image
       update();
 
       // Fill the window with array colors     
-
+      for (int i = 0; i < screenWidth_ * screenHeight_; ++i) {
+         SDL_SetRenderDrawColor(renderer_, image[i].r, image[i].g, image[i].b, image[i].a);
+         SDL_RenderDrawPoint(renderer_, i % screenWidth_, i / screenWidth_);
+      }
       // Update the screen
-      SDL_RenderPresent(renderer);
+      SDL_RenderPresent(renderer_);
+      SDL_Delay(animationDelay_);
    }
    
    // Clean up
-   SDL_DestroyRenderer(renderer);
-   SDL_DestroyWindow(window);
+   SDL_DestroyRenderer(renderer_);
+   SDL_DestroyWindow(window_);
    SDL_Quit();
 }

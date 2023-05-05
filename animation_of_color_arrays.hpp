@@ -7,9 +7,9 @@
 
 #define ERROR() std::cout << "Error in " << __func__ << " on line " << __LINE__ << std::endl; exit(1);
 
-typedef Color {
+typedef struct {
    unsigned char r, g, b;
-};
+} Color;
 
 class simpleWindow {
    private:
@@ -20,5 +20,5 @@ class simpleWindow {
       SDL_Renderer* renderer_;
    public:
       simpleWindow(int, int, int, std::string);
-      animate(vector<Color>, function<void()>);
+      void animate(std::vector<SDL_Color>&, std::function<void()>);
 };
