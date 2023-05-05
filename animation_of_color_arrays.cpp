@@ -7,6 +7,7 @@ simpleWindow::simpleWindow(int width,
                            : screenWidth_(width),
                              screenHeight_(height), 
                              animationDelay_(delay) {
+
    // Initialize SDL
    window_ = nullptr;
    renderer_ = nullptr;
@@ -30,7 +31,7 @@ simpleWindow::simpleWindow(int width,
    }
 }
 
-void simpleWindow::animate(std::vector<SDL_Color>& image, std::function<void()> update) {
+void simpleWindow::animate(std::vector<SDL_Color>& image, std::function<void()> imageUpdateFunction) {
 
    if (image.size() != screenWidth_ * screenHeight_) {
       std::cout << "Size of the image should be the same as the screen created! " << std::endl;
@@ -52,13 +53,14 @@ void simpleWindow::animate(std::vector<SDL_Color>& image, std::function<void()> 
       }
       
       // Update the image
-      update();
+      imageUpdateFunction();
 
       // Fill the window with array colors     
       for (int i = 0; i < screenWidth_ * screenHeight_; ++i) {
          SDL_SetRenderDrawColor(renderer_, image[i].r, image[i].g, image[i].b, image[i].a);
          SDL_RenderDrawPoint(renderer_, i % screenWidth_, i / screenWidth_);
       }
+
       // Update the screen
       SDL_RenderPresent(renderer_);
       SDL_Delay(animationDelay_);
