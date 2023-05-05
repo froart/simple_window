@@ -1,4 +1,4 @@
-#include "animation_of_color_arrays.hpp"
+#include "simple_window.hpp"
 
 simpleWindow::simpleWindow(int width,
                            int height,
